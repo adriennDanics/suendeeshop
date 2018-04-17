@@ -33,32 +33,143 @@
     <h1>Codecool Shop</h1>
 </div>
 
-<div class="container">
-    <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
-    </div>
-
-    <div id="products" class="row list-group">
-
-        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
-            <div class="thumbnail">
-                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
-                <div class="caption">
-                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
-                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6">
-                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
-                        </div>
-                        <div class="col-xs-12 col-md-6">
-                            <a class="btn btn-success" href="#">Add to cart</a>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header well well-sm" id="headingTablet">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTablet" aria-expanded="false" aria-controls="collapseTablet" th:text="${categories.get(0).getName()}">
+                    Category Title
+                </button>
+            </h5>
+        </div>
+        <div id="collapseTablet" class="collapse" aria-labelledby="headingTablet" data-parent="#accordion">
+            <div class="card-body">
+                <div class="container">
+                    <div id="tablets" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${tablets}">
+                            <div class="thumbnail">
+                                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                                <div class="caption">
+                                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="card">
+        <div class="card-header well well-sm" id="headingLaptop">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLaptop" aria-expanded="false" aria-controls="collapseLaptop" th:text="${categories.get(1).getName()}">
+                    Category Title
+                </button>
+            </h5>
+        </div>
+        <div id="collapseLaptop" class="collapse" aria-labelledby="headingLaptop" data-parent="#accordion">
+            <div class="card-body">
+                <div class="container">
+                    <div id="laptops" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${laptops}">
+                            <div class="thumbnail">
+                                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                                <div class="caption">
+                                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header well well-sm" id="headingPhone">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePhone" aria-expanded="false" aria-controls="collapsePhone" th:text="${categories.get(2).getName()}">
+                    Category Title
+                </button>
+            </h5>
+        </div>
+        <div id="collapsePhone" class="collapse" aria-labelledby="headingPhone" data-parent="#accordion">
+            <div class="card-body">
+                <div class="container">
+                    <div id="phones" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${phones}">
+                            <div class="thumbnail">
+                                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                                <div class="caption">
+                                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header well well-sm" id="headingDrone">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseDrone" aria-expanded="false" aria-controls="collapseDrone" th:text="${categories.get(3).getName()}">
+                    Category Title
+                </button>
+            </h5>
+        </div>
+        <div id="collapseDrone" class="collapse" aria-labelledby="headingDrone" data-parent="#accordion">
+            <div class="card-body">
+                <div class="container">
+                    <div id="drones" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${drones}">
+                            <div class="thumbnail">
+                                <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                                <div class="caption">
+                                    <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
+                                    <p class="group inner list-group-item-text" th:text="${prod.description}">Product description... </p>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
