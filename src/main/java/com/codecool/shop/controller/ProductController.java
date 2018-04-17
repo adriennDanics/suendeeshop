@@ -2,9 +2,11 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -24,6 +26,7 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -38,6 +41,13 @@ public class ProductController extends HttpServlet {
         context.setVariable("laptops", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("phones", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("drones", productDataStore.getBy(productCategoryDataStore.find(4)));
+        context.setVariable("suppliers", supplierDataStore.getAll());
+        context.setVariable("amazon", productDataStore.getBy(supplierDataStore.find(1)));
+        context.setVariable("lenovo", productDataStore.getBy(supplierDataStore.find(2)));
+        context.setVariable("asus", productDataStore.getBy(supplierDataStore.find(3)));
+        context.setVariable("apple", productDataStore.getBy(supplierDataStore.find(4)));
+        context.setVariable("samsung", productDataStore.getBy(supplierDataStore.find(5)));
+        context.setVariable("dji", productDataStore.getBy(supplierDataStore.find(6)));
         engine.process("product/index.html", context, resp.getWriter());
     }
 
