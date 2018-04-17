@@ -60,3 +60,11 @@
 {
     margin: 0 0 11px;
 }
+a {
+    color: white;
+    text-decoration: none;
+}
+a:hover {
+    color: #eee;
+    text-decoration: none;
+}

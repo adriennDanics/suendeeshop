@@ -19,13 +19,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {"/"})
-public class ProductController extends HttpServlet {
+@WebServlet(urlPatterns = {"/suppliers"})
+public class ProductControllerBySupplier extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
@@ -35,12 +35,14 @@ public class ProductController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
-        context.setVariable("categories", productCategoryDataStore.getAll());
-        context.setVariable("tablets", productDataStore.getBy(productCategoryDataStore.find(1)));
-        context.setVariable("laptops", productDataStore.getBy(productCategoryDataStore.find(2)));
-        context.setVariable("phones", productDataStore.getBy(productCategoryDataStore.find(3)));
-        context.setVariable("drones", productDataStore.getBy(productCategoryDataStore.find(4)));
-        engine.process("product/index.html", context, resp.getWriter());
+        context.setVariable("suppliers", supplierDataStore.getAll());
+        context.setVariable("amazon", productDataStore.getBy(supplierDataStore.find(1)));
+        context.setVariable("lenovo", productDataStore.getBy(supplierDataStore.find(2)));
+        context.setVariable("asus", productDataStore.getBy(supplierDataStore.find(3)));
+        context.setVariable("apple", productDataStore.getBy(supplierDataStore.find(4)));
+        context.setVariable("samsung", productDataStore.getBy(supplierDataStore.find(5)));
+        context.setVariable("dji", productDataStore.getBy(supplierDataStore.find(6)));
+        engine.process("product/suppliers.html", context, resp.getWriter());
     }
 
 }
