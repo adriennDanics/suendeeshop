@@ -39,6 +39,10 @@
                 <configuration>
                     <reload>automatic</reload>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <httpConnector>
+                        <!--host>localhost</host-->
+                        <port>8888</port>
+                    </httpConnector>
                 </configuration>
             </plugin>
         </plugins>
