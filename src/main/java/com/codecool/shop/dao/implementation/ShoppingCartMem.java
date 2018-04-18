@@ -9,10 +9,12 @@ public class ShoppingCartMem implements ShoppingCart {
     private static List<Product> shoppingCartList = new ArrayList<>();
     private static Map<Product, Integer> shoppingCartMap = new HashMap<>();
     private static int DEFAULTVALUE = 1;
+    private static int checkNumber = shoppingCartList.size();
+
 
     @Override
     public int length(){
-        return shoppingCartMap.size();
+        return checkNumber;
     }
 
     public static List<Product> getAll() {
@@ -26,13 +28,17 @@ public class ShoppingCartMem implements ShoppingCart {
 
     @Override
     public void add(Product product) {
-        for(int i = 0; i <= shoppingCartList.size(); i++) {
-            if (shoppingCartList.size()>0 && shoppingCartList.get(i).equals(product)){
+        for(int i = 0; i <= checkNumber; i++) {
+            if (shoppingCartList.contains(product)) {
                 Integer value = shoppingCartMap.get(product);
-                shoppingCartMap.put(product, value+1);
+                shoppingCartMap.put(product, ++value);
+                ++checkNumber;
+                break;
+
             } else {
                 shoppingCartMap.put(product, DEFAULTVALUE);
                 shoppingCartList.add(product);
+                ++checkNumber;
                 break;
             }
         }
