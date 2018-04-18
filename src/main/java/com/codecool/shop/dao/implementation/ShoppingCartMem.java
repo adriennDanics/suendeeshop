@@ -15,8 +15,8 @@ public class ShoppingCartMem implements ShoppingCart {
         return shoppingCartMap.size();
     }
 
-    public static Map<Product, Integer> getAll() {
-        return shoppingCartMap;
+    public static List<Product> getAll() {
+        return shoppingCartList;
     }
 
     public Product find(int id) {

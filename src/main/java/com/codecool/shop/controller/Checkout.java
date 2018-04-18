@@ -24,7 +24,7 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCart shoppingCart = ShoppingCartMem.getInstance();
+        ShoppingCart shoppingCart = new ShoppingCartMem();
         List<Product> products = ((ShoppingCartMem) shoppingCart).getAll();
         int subtotal = 0;
         for (Product prod: products) {
