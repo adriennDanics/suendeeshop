@@ -35,26 +35,30 @@
 
 <div class="container">
     <div class="well well-sm">
-        <strong th:text="${category.name}">Category Title</strong>
+        <strong>Your items</strong>
     </div>
 </div>
 
-<div>
-    <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${products}">
-        <div class="thumbnail">
-            <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+<div class="panel-group" id="accordion_by_category">
+    <div class="item" th:each="prod,iterStat : ${products}">
+            <img class="review-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
             <div class="caption">
                 <h4 class="group inner list-group-item-heading" th:text="${prod.name}">Product name</h4>
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div>
-                        <p class="lead">1 piece</p>
+                    <div aria-label="Basic">
+                         <button type="button" class="btn btn-secondary">+</button>
+                         <button type="button" class="btn btn-secondary">-</button><br>
+                        <form action="/action_page.php" class="btn-group-vertical" role="group" aria-label="Basic">
+
+                        <input type="text" name="fname" placeholder="1" maxlength="3" size="2"><span> piece</span><br><br>
+                        <input type="submit" value="OK">
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     <div>
         <a href="/">Back</a>
