@@ -29,11 +29,10 @@ public class Remove extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-        int idint = Integer.parseInt(id);
-        ShoppingCart mine = ShoppingCartMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        Product removeThisFromCart = productDataStore.find(idint);
-        mine.remove(idint);
-        resp.sendRedirect("/");
+        int idInt = Integer.parseInt(id);
+        ShoppingCart mine = new ShoppingCartMem();
+        mine.remove(idInt);
+        String whereFrom = req.getHeader("referer");;
+        resp.sendRedirect(whereFrom);
     }
 }

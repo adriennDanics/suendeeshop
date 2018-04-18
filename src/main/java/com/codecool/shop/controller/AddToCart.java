@@ -29,11 +29,12 @@ public class AddToCart extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-        int idint = Integer.parseInt(id);
-        ShoppingCart mine = ShoppingCartMem.getInstance();
+        int idInt = Integer.parseInt(id);
+        ShoppingCart mine = new ShoppingCartMem();
         ProductDao productDataStore = ProductDaoMem.getInstance();
-        Product addThisToCart = productDataStore.find(idint);
+        Product addThisToCart = productDataStore.find(idInt);
         mine.add(addThisToCart);
-        resp.sendRedirect("/");
+        String whereFrom = req.getHeader("referer");
+        resp.sendRedirect(whereFrom);
     }
 }

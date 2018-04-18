@@ -31,6 +31,7 @@
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
+    <div class="thumbnail" th:text="${cart}">Num</div>
     <div class="btn btn-primary text-warning"><a href="/">By Product Category</a></div>
 </div>
 
@@ -61,7 +62,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +96,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -129,7 +130,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +164,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +198,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -231,7 +232,7 @@
                                             <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
-                                            <a class="btn btn-success" href="#">Add to cart</a>
+                                            <a class="btn btn-success"  th:href="@{/add(id=${prod.id})}">Add to cart</a>
                                         </div>
                                     </div>
                                 </div>
@@ -241,6 +242,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <a href="/item">Checkout</a>
     </div>
 </div>
 

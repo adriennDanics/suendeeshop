@@ -24,7 +24,7 @@ public class Checkout extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ShoppingCart shoppingCart = ShoppingCartMem.getInstance();
+        ShoppingCart shoppingCart = new ShoppingCartMem();
 
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
