@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/item"})
-public class Checkout extends HttpServlet {
+@WebServlet(urlPatterns = {"/card"})
+public class CardPayment extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,10 +38,7 @@ public class Checkout extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
-        context.setVariable("products", products);
-        context.setVariable("subtotal", subtotal);
-        context.setVariable("shipping", "$10");
         context.setVariable("total", subtotal+10);
-        engine.process("product/item.html", context, resp.getWriter());
+        engine.process("product/card.html", context, resp.getWriter());
     }
 }
