@@ -7,6 +7,7 @@ import com.codecool.shop.dao.ShoppingCart;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.ShoppingCartMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -16,16 +17,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/item"})
 public class Checkout extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ShoppingCart shoppingCart = ShoppingCartMem.getInstance();
-
+        List<Product> products = ((ShoppingCartMem) shoppingCart).getAll();
+        int subtotal = 0;
+        for (Product prod: products) {
+            subtotal += prod.getDefaultPrice();
+        }
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
 //        params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
@@ -34,8 +38,10 @@ public class Checkout extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
-        context.setVariable("category", productCategoryDataStore.find(1));
-        context.setVariable("products", ((ShoppingCartMem) shoppingCart).getAll());
+        context.setVariable("products", products);
+        context.setVariable("subtotal", subtotal);
+        context.setVariable("shipping", "$10");
+        context.setVariable("total", subtotal+10);
         engine.process("product/item.html", context, resp.getWriter());
     }
 }
