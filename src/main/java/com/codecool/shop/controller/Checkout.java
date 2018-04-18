@@ -29,7 +29,7 @@ public class Checkout extends HttpServlet {
         Map<Product, Integer> products = ((ShoppingCartMem) shoppingCart).getAll();
         int subtotal = 0;
         for (Product key: products.keySet()) {
-            subtotal += key.getDefaultPrice();
+            subtotal += key.getDefaultPrice()*products.get(key);
         }
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));

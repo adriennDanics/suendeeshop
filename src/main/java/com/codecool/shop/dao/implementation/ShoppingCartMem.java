@@ -17,13 +17,8 @@ public class ShoppingCartMem implements ShoppingCart {
         return checkNumber;
     }
 
-    public static Map<Product, Integer> getAll() {
+    public Map<Product, Integer> getAll() {
         return shoppingCartMap;
-    }
-
-    public Product find(int id) {
-        //TOdo
-        return null;
     }
 
     @Override
@@ -46,17 +41,23 @@ public class ShoppingCartMem implements ShoppingCart {
 
     @Override
     public void remove(int id) {
-        /*for(Product productToCheck: shoppingCartList) {
+        ListIterator<Product> iterator = shoppingCartList.listIterator();
+        while (iterator.hasNext()) {
+            Product productToCheck = iterator.next();
             if (productToCheck.getId() == (id)){
                 Integer value = shoppingCartMap.get(productToCheck);
                 if(value > 1) {
-                    shoppingCartMap.put(productToCheck, value - 1);
+                    shoppingCartMap.put(productToCheck, --value);
+                    --checkNumber;
+                    break;
                 } else {
                     shoppingCartMap.remove(productToCheck);
                     shoppingCartList.remove(productToCheck);
+                    --checkNumber;
+                    break;
                 }
+
             }
-        }*/
-        //TODO
+        }
     }
 }
