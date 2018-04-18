@@ -50,8 +50,14 @@
 
 .item.list-group-item img
 {
-    float: left;
+    float: bottom;
 }
+
+.review-image
+{
+    padding: 0px 100px 0px 500px;
+}
+
 .item.list-group-item:after
 {
     clear: both;
@@ -61,7 +67,7 @@
     margin: 0 0 11px;
 }
 a {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 a:hover {
