@@ -17,8 +17,8 @@ public class ShoppingCartMem implements ShoppingCart {
         return checkNumber;
     }
 
-    public static List<Product> getAll() {
-        return shoppingCartList;
+    public static Map<Product, Integer> getAll() {
+        return shoppingCartMap;
     }
 
     public Product find(int id) {

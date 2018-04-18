@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/item"})
 public class Checkout extends HttpServlet {
@@ -25,10 +26,10 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShoppingCart shoppingCart = new ShoppingCartMem();
-        List<Product> products = ((ShoppingCartMem) shoppingCart).getAll();
+        Map<Product, Integer> products = ((ShoppingCartMem) shoppingCart).getAll();
         int subtotal = 0;
-        for (Product prod: products) {
-            subtotal += prod.getDefaultPrice();
+        for (Product key: products.keySet()) {
+            subtotal += key.getDefaultPrice();
         }
 //        Map params = new HashMap<>();
 //        params.put("category", productCategoryDataStore.find(1));
