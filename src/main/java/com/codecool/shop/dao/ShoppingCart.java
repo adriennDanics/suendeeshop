@@ -8,6 +8,7 @@ public interface ShoppingCart {
 
     void add(Product product);
     void remove(int id);
+    void clear();
 
     int length();
 

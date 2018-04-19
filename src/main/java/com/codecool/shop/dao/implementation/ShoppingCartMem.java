@@ -10,6 +10,13 @@ public class ShoppingCartMem implements ShoppingCart {
     private static Map<Product, Integer> shoppingCartMap = new HashMap<>();
     private static int DEFAULTVALUE = 1;
     private static int checkNumber = shoppingCartList.size();
+    static String DEFAULT_STRING = "NONE";
+    public static String name =DEFAULT_STRING;
+    public static String billing_address =DEFAULT_STRING;
+    public static String shipping_address =DEFAULT_STRING;
+    public static String phone_number =DEFAULT_STRING;
+    public static String email_address =DEFAULT_STRING;
+
 
 
     @Override
@@ -59,5 +66,12 @@ public class ShoppingCartMem implements ShoppingCart {
 
             }
         }
+    }
+
+    @Override
+    public void clear() {
+        shoppingCartList.clear();
+        shoppingCartMap.clear();
+        checkNumber = 0;
     }
 }

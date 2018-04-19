@@ -43,16 +43,23 @@ public class Checkout extends HttpServlet {
         context.setVariable("subtotal", subtotal);
         context.setVariable("shipping", "$10");
         context.setVariable("total", subtotal+10);
+        context.setVariable("shoppingCart", shoppingCart);
         engine.process("product/item.html", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String billing_address = req.getParameter("billing_address");
-        String shipping_address = req.getParameter("shipping_address");
-        String phone_number = req.getParameter("phone_number");
-        String email_address = req.getParameter("email_address");
-        resp.sendRedirect("/");
+        ShoppingCartMem shoppingCart = new ShoppingCartMem();
+        shoppingCart.name = req.getParameter("name");
+        shoppingCart.billing_address = req.getParameter("billing_address");
+        shoppingCart.shipping_address = req.getParameter("shipping_address");
+        shoppingCart.phone_number = req.getParameter("phone_number");
+        shoppingCart.email_address = req.getParameter("email_address");
+        if (req.getParameter("pay_with_card") != null) {
+            resp.sendRedirect("/card");
+        } else {
+            resp.sendRedirect("/");
+            shoppingCart.clear();
+        }
     }
 }
