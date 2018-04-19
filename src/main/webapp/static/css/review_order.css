@@ -7,9 +7,6 @@ html,body,.wrapper{
     float: right;
     font-size: 16px
 }
-
-
-
 .step {
     float: left;
     background: white;
@@ -307,9 +304,15 @@ hr{
     }
 
 }
-#payment_button {
+#pay_with_card {
     float: right;
     margin-right: 7%;
+    margin-bottom: 2%;
+}
+
+#pay_when_arrive{
+    float: left;
+    margin-left: 65%;
     margin-bottom: 2%;
 }
 .btn-danger{

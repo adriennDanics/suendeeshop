@@ -22,12 +22,18 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ShoppingCart shoppingCart = new ShoppingCartMem();
+        ShoppingCartMem shoppingCart = new ShoppingCartMem();
         HttpSession session = req.getSession(true);
         if(session.isNew()){
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCart) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+        }
+        String origin = req.getHeader("referer");
+        if(origin != null){
+            if (origin.equals("http://localhost:8080/card")) {
+                shoppingCart.clear();
+            }
         }
 
 //        Map params = new HashMap<>();
