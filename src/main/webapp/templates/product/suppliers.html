@@ -30,19 +30,21 @@
 </head>
 
 <body>
+<img src="/static/img/returntoSleep.png" height="200" width="200" align="left">
+
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <div class="btn btn-primary text-warning"><a href="/">By Product Category</a></div>
     <div class="badge-cart">
-        <a class="cart-image" href="/item">
+        <a href="/item">
+            <img src="/static/img/supplier.png" height="60" width="60" align="right">
+        </a>
+        <a class="cart-image" href="/">
             <span class="badge cart-image" th:text="${cart}">Num</span>
-            <img src="http://pngimg.com/uploads/shopping_cart/shopping_cart_PNG70.png" height="60" width="60" align="right">
+            <img src="/static/img/cart.png" height="60" width="60" align="right">
         </a>
     </div>
 </div>
-
-
 
 
 <div class="panel-group" id="accordion_by_supplier">

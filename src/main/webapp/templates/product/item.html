@@ -15,10 +15,20 @@
 </head>
 
 <body>
+<img src="/static/img/returntoSleep.png" height="200" width="200" align="left">
+
 
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
-    <div class="btn btn-primary text-warning"><a href="/">Back To Homepage</a></div>
+    <div class="badge-cart">
+        <a href="/item">
+            <img src="/static/img/supplier.png" height="60" width="60" align="right">
+        </a>
+        <a class="cart-image" href="/suppliers">
+            <span class="badge cart-image" th:text="${cart}">Num</span>
+            <img src="/static/img/cart.png" height="60" width="60" align="right">
+        </a>
+    </div>
 </div>
 
 <div class="container">

@@ -3,15 +3,14 @@
 }
 body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center {
     margin: 0px;
-    background-color: #59565e;
+    background-image: url("/static/img/background.jpg") !important;
     background-size: 100%;
     background-repeat: no-repeat;
-    opacity: 0.95;
 }
 
 .panel.panel-default, .panel-heading.well.well-sm, .row.cart-body, .panel-info > .panel-heading {
     margin-top: 0px !important;
-    background-image: url("/static/img/black-gradient-background.jpg") !important;
+    background-image: url("/static/img/background-stars.jpeg") !important;
     background-size: 100%;
     background-repeat: no-repeat;
     opacity: 0.95;
@@ -24,6 +23,7 @@ body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center 
 h1{
     font-family: 'Playfair Display SC', serif;
     color: rgba(85, 80, 133, 0.8);
+    margin-left: 50px;
 }
 
 span.badge.cart-image{
