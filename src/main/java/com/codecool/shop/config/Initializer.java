@@ -26,23 +26,23 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier nature = new Supplier("Nature", "Digital content and services");
+        Supplier nature = new Supplier("Nature", "All around and provides");
         supplierDataStore.add(nature);
-        Supplier higherPower = new Supplier("Higher Power", "Computers");
+        Supplier higherPower = new Supplier("Higher Power", "Cosmic power (existence debated)");
         supplierDataStore.add(higherPower);
-        Supplier innerVoice = new Supplier("Inner Voice", "Computers");
+        Supplier innerVoice = new Supplier("Inner Voice", "Inner monologue to encourage or discourage");
         supplierDataStore.add(innerVoice);
-        Supplier fate = new Supplier("Fate", "Phones");
+        Supplier fate = new Supplier("Fate", "Cosmic power to help or hinder");
         supplierDataStore.add(fate);
 
         //setting up a new product category
-        ProductCategory necessities = new ProductCategory("Necessities", "Abstract", "A necessities computer, commonly shortened to necessities, is a thin, flat mobile computer with a touchscreen display.");
+        ProductCategory necessities = new ProductCategory("Necessities", "Abstract", "Everything you need to live your life but nothing material.");
         productCategoryDataStore.add(necessities);
-        ProductCategory powerups = new ProductCategory("Power-ups", "Abstract", "A portable computer with a built in display");
+        ProductCategory powerups = new ProductCategory("Power-ups", "Abstract", "Everything you might need to live your life happily, mainly attitude. ");
         productCategoryDataStore.add(powerups);
-        ProductCategory materialGoods = new ProductCategory("Material Goods", "Material Goods", "A mobile materialGoods that performs many of the functions of a computer, typically having a touchscreen interface, Internet access");
+        ProductCategory materialGoods = new ProductCategory("Material Goods", "Material Goods", "What you might want and cannot get anywhere else.");
         productCategoryDataStore.add(materialGoods);
-        ProductCategory priceless = new ProductCategory("Priceless", "Abstract", "An aircraft without a human pilot aboard");
+        ProductCategory priceless = new ProductCategory("Priceless", "Abstract", "What no one else has but you really want anyway.");
         productCategoryDataStore.add(priceless);
 
         //setting up products and printing it
