@@ -3,41 +3,61 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ShoppingCart;
 import com.codecool.shop.model.Product;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ShoppingCartMem implements ShoppingCart {
-    private static List<Product> shoppingCartList = new ArrayList<Product>();
-    private static ShoppingCartMem instance = null;
+    private static List<Product> shoppingCartList = new ArrayList<>();
+    private static Map<Product, Integer> shoppingCartMap = new HashMap<>();
+    private static int DEFAULTVALUE = 1;
+    private static int checkNumber = shoppingCartList.size();
 
-    /* A private Constructor prevents any other class from instantiating.
-     */
-    private ShoppingCartMem() {
-    }
-
-    public static ShoppingCartMem getInstance() {
-        if (instance == null) {
-            instance = new ShoppingCartMem();
-        }
-        return instance;
-    }
-
-    public static List<Product> getAll() {
-        return shoppingCartList;
-    }
 
     @Override
-    public Product find(int id) {
-        return shoppingCartList.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public int length(){
+        return checkNumber;
+    }
+
+    public Map<Product, Integer> getAll() {
+        return shoppingCartMap;
     }
 
     @Override
     public void add(Product product) {
-        shoppingCartList.add(product);
+        for(int i = 0; i <= checkNumber; i++) {
+            if (shoppingCartList.contains(product)) {
+                Integer value = shoppingCartMap.get(product);
+                shoppingCartMap.put(product, ++value);
+                ++checkNumber;
+                break;
+
+            } else {
+                shoppingCartMap.put(product, DEFAULTVALUE);
+                shoppingCartList.add(product);
+                ++checkNumber;
+                break;
+            }
+        }
     }
 
     @Override
     public void remove(int id) {
-        shoppingCartList.remove(find(id));
+        ListIterator<Product> iterator = shoppingCartList.listIterator();
+        while (iterator.hasNext()) {
+            Product productToCheck = iterator.next();
+            if (productToCheck.getId() == (id)){
+                Integer value = shoppingCartMap.get(productToCheck);
+                if(value > 1) {
+                    shoppingCartMap.put(productToCheck, --value);
+                    --checkNumber;
+                    break;
+                } else {
+                    shoppingCartMap.remove(productToCheck);
+                    shoppingCartList.remove(productToCheck);
+                    --checkNumber;
+                    break;
+                }
+
+            }
+        }
     }
 }
