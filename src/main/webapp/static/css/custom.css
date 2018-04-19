@@ -117,3 +117,9 @@ a:hover {
     color: #eee;
     text-decoration: none;
 }
+
+img.group.list-group-image{
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+}

@@ -63,7 +63,7 @@
             <div class="panel-body">
                 <div class="container">
                     <div id="tablets" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${tablets}">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${necessities}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -97,7 +97,7 @@
             <div class="panel-body">
                 <div class="container">
                     <div id="laptops" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${laptops}">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${powerUps}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -131,7 +131,7 @@
             <div class="panel-body">
                 <div class="container">
                     <div id="phones" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${phones}">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${materialGoods}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -165,7 +165,7 @@
             <div class="panel-body">
                 <div class="container">
                     <div id="drones" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${drones}">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${priceless}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">

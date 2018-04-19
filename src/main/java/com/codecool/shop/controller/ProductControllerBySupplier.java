@@ -39,12 +39,10 @@ public class ProductControllerBySupplier extends HttpServlet {
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
         context.setVariable("suppliers", supplierDataStore.getAll());
-        context.setVariable("amazon", productDataStore.getBy(supplierDataStore.find(1)));
-        context.setVariable("lenovo", productDataStore.getBy(supplierDataStore.find(2)));
-        context.setVariable("asus", productDataStore.getBy(supplierDataStore.find(3)));
-        context.setVariable("apple", productDataStore.getBy(supplierDataStore.find(4)));
-        context.setVariable("samsung", productDataStore.getBy(supplierDataStore.find(5)));
-        context.setVariable("dji", productDataStore.getBy(supplierDataStore.find(6)));
+        context.setVariable("nature", productDataStore.getBy(supplierDataStore.find(1)));
+        context.setVariable("higherPower", productDataStore.getBy(supplierDataStore.find(2)));
+        context.setVariable("innerVoice", productDataStore.getBy(supplierDataStore.find(3)));
+        context.setVariable("fate", productDataStore.getBy(supplierDataStore.find(4)));
         context.setVariable("cart", shoppingCart.length());
         engine.process("product/suppliers.html", context, resp.getWriter());
     }
