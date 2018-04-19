@@ -1,20 +1,27 @@
 .glyphicon {
     margin-right:5px;
 }
-body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center {
+body, .row.cart-body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center, .panel-info > .panel-heading, .footer.panel.panel-default {
     margin: 0px;
     background-image: url("/static/img/background.jpg") !important;
     background-size: 100%;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-.panel.panel-default, .panel-heading.well.well-sm, .row.cart-body, .panel-info > .panel-heading {
+.panel.panel-default, .panel-heading.well.well-sm {
     margin-top: 0px !important;
     background-image: url("/static/img/background-stars.jpeg") !important;
     background-size: 100%;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     opacity: 0.95;
 }
+
+.well {
+    margin-top: 20px;
+     margin-bottom: 0px !important;
+ }
 
 .panel-group{
     margin-bottom: 0px;
@@ -123,3 +130,18 @@ img.group.list-group-image{
     height: 250px;
     overflow: hidden;
 }
+
+.form-control.col-md-12 {
+    width: 50%;
+}
+
+.container, .container.wrapper {
+    padding: 0px;
+}
+
+.footer.panel.panel-default {
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
+
