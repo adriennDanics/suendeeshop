@@ -53,6 +53,7 @@ div.badge-cart{
 }
 .thumbnail
 {
+    background-color: #b9b9b9;
     margin-bottom: 20px;
     padding: 0px;
     -webkit-border-radius: 0px;
@@ -137,11 +138,5 @@ img.group.list-group-image{
 
 .container, .container.wrapper {
     padding: 0px;
-}
-
-.footer.panel.panel-default {
-    width: 100%;
-    bottom: 0;
-    position: fixed;
 }
 
