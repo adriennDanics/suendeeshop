@@ -45,4 +45,18 @@ public class Checkout extends HttpServlet {
         context.setVariable("total", subtotal+10);
         engine.process("product/item.html", context, resp.getWriter());
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String billing_address = req.getParameter("billing_address");
+        String shipping_address = req.getParameter("shipping_address");
+        String phone_number = req.getParameter("phone_number");
+        String email_address = req.getParameter("email_address");
+
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+//        context.setVariables(params);
+        engine.process("product/item.html", context, resp.getWriter());
+    }
 }
