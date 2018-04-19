@@ -30,8 +30,6 @@ public class ProductController extends HttpServlet {
             shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
-        System.out.println("Details: ");
-        System.out.println(shoppingCart.name);
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
                 shoppingCart.clear();
