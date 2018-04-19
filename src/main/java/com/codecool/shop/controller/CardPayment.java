@@ -40,6 +40,7 @@ public class CardPayment extends HttpServlet {
 //        context.setVariables(params);
         context.setVariable("recipient", "World");
         context.setVariable("total", subtotal+10);
+        context.setVariable("shoppingCart", shoppingCart);
         engine.process("product/card.html", context, resp.getWriter());
     }
 }

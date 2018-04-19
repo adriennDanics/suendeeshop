@@ -304,9 +304,15 @@ hr{
     }
 
 }
-#payment_button {
+#pay_with_card {
     float: right;
     margin-right: 7%;
+    margin-bottom: 2%;
+}
+
+#pay_when_arrive{
+    float: left;
+    margin-left: 65%;
     margin-bottom: 2%;
 }
 /*

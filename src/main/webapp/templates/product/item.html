@@ -28,7 +28,7 @@
 </div>
 
 <div class="row cart-body" id="mycart">
-    <form class="form-horizontal" method="post" action>
+    <form class="form-horizontal" method="post" action="/item">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="container wrapper">
                 <div class="panel panel-info">
@@ -89,44 +89,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12"><strong>Country:</strong></div>
+                            <div class="col-md-12 col-xs-12">
+                                <strong>Name:</strong>
+                                <input type="text" name="name" class="form-control" value="" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12"><strong>Billing Address:</strong></div>
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="country" value="" />
+                                <input type="text" name="billing_address" class="form-control" value="" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6 col-xs-12">
-                                <strong>First Name:</strong>
-                                <input type="text" name="first_name" class="form-control" value="" />
-                            </div>
-                            <div class="span1"></div>
-                            <div class="col-md-6 col-xs-12">
-                                <strong>Last Name:</strong>
-                                <input type="text" name="last_name" class="form-control" value="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12"><strong>Address:</strong></div>
+                            <div class="col-md-12"><strong>Shipping Address:</strong></div>
                             <div class="col-md-12">
-                                <input type="text" name="address" class="form-control" value="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12"><strong>City:</strong></div>
-                            <div class="col-md-12">
-                                <input type="text" name="city" class="form-control" value="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12"><strong>State:</strong></div>
-                            <div class="col-md-12">
-                                <input type="text" name="state" class="form-control" value="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12"><strong>Zip / Postal Code:</strong></div>
-                            <div class="col-md-12">
-                                <input type="text" name="zip_code" class="form-control" value="" />
+                                <input type="text" name="shipping_address" class="form-control" value="" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -141,8 +119,9 @@
                 </div>
             </div>
         </div>
+    <button class="btn btn-success" type="submit" name="pay_when_arrive" id="pay_when_arrive">Pay when package arrives</button>
+    <button class="btn btn-success" type="submit" name="pay_with_card" id="pay_with_card">Pay with Credit Card</button>
     </form>
-    <div id="payment_button"><a class="btn btn-success" href="/card">Proceed To Payment Page</a></div>
 
 </div>
 
