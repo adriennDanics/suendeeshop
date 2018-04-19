@@ -53,10 +53,6 @@ public class Checkout extends HttpServlet {
         String shipping_address = req.getParameter("shipping_address");
         String phone_number = req.getParameter("phone_number");
         String email_address = req.getParameter("email_address");
-
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariables(params);
-        engine.process("product/item.html", context, resp.getWriter());
+        resp.sendRedirect("/");
     }
 }
