@@ -30,7 +30,8 @@
 </head>
 
 <body>
-<img src="/static/img/returntoSleep.png" height="200" width="200" align="left" style="opacity: 0.85;">
+<img src="/static/img/returntoSleep.png" height="200" width="200" align="left" style="opacity: 0.85;
+">
 
 <div class="jumbotron text-center">
 
@@ -40,7 +41,7 @@
         <a href="/item">
             <img src="/static/img/supplier.png" height="60" width="60" align="right">
         </a>
-        <a class="cart-image" href="/suppliers">
+        <a class="cart-image" href="/">
             <span class="badge cart-image" th:text="${cart}">Num</span>
             <img src="/static/img/cart.png" height="60" width="60" align="right">
         </a>
@@ -48,20 +49,20 @@
 </div>
 
 
-<div class="panel-group" id="accordion_by_category" style="margin-top: 20px; margin-left: 50px; margin-right: 50px">
+<div class="panel-group" id="accordion_by_supplier" style="margin-top: 20px; margin-left: 50px; margin-right: 50px">
     <div class="panel panel-default">
-        <div class="panel-heading well well-sm" id="headingTablet">
+         <div class="panel-heading well well-sm" id="headingAmazon">
             <h5 class="mb-0 panel-title">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTablet" aria-expanded="true" aria-controls="collapseOne" th:text="${categories.get(0).getName()}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseAmazon" aria-expanded="true" aria-controls="collapseOne" th:text="${suppliers.get(0).getName()}">
                     Category Title
                 </button>
             </h5>
         </div>
-        <div id="collapseTablet" class="panel-collapse collapse in" aria-labelledby="headingTablet" data-parent="#accordion_by_category">
+        <div id="collapseAmazon" class="panel-collapse collapse in" aria-labelledby="headingAmazon" data-parent="#accordion_by_supplier">
             <div class="panel-body">
                 <div class="container">
-                    <div id="tablets" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${necessities}">
+                    <div id="amazon" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${nature}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -84,18 +85,18 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading well well-sm" id="headingLaptop">
+        <div class="panel-heading well well-sm" id="headingLenovo">
             <h5 class="mb-0 panel-title">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLaptop" aria-expanded="true" aria-controls="collapseOne" th:text="${categories.get(1).getName()}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseLenovo" aria-expanded="true" aria-controls="collapseOne" th:text="${suppliers.get(1).getName()}">
                     Category Title
                 </button>
             </h5>
         </div>
-        <div id="collapseLaptop" class="panel-collapse collapse" aria-labelledby="headingLaptop" data-parent="#accordion_by_category">
+        <div id="collapseLenovo" class="panel-collapse collapse" aria-labelledby="headingLenovo" data-parent="#accordion_by_supplier">
             <div class="panel-body">
                 <div class="container">
-                    <div id="laptops" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${powerUps}">
+                    <div id="lenovo" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${higherPower}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -118,18 +119,18 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading well well-sm" id="headingPhone">
+        <div class="panel-heading well well-sm" id="headingAsus">
             <h5 class="mb-0 panel-title">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapsePhone" aria-expanded="true" aria-controls="collapseOne" th:text="${categories.get(2).getName()}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseAsus" aria-expanded="true" aria-controls="collapseOne" th:text="${suppliers.get(2).getName()}">
                     Category Title
                 </button>
             </h5>
         </div>
-        <div id="collapsePhone" class="panel-collapse collapse" aria-labelledby="headingPhone" data-parent="#accordion_by_category">
+        <div id="collapseAsus" class="panel-collapse collapse" aria-labelledby="headingAsus" data-parent="#accordion_by_supplier">
             <div class="panel-body">
                 <div class="container">
-                    <div id="phones" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${materialGoods}">
+                    <div id="asus" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${innerVoice}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -152,18 +153,18 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading well well-sm" id="headingDrone">
+        <div class="panel-heading well well-sm" id="headingApple">
             <h5 class="mb-0 panel-title">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseDrone" aria-expanded="true" aria-controls="collapseOne" th:text="${categories.get(3).getName()}">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseApple" aria-expanded="true" aria-controls="collapseOne" th:text="${suppliers.get(3).getName()}">
                     Category Title
                 </button>
             </h5>
         </div>
-        <div id="collapseDrone" class="panel-collapse collapse" aria-labelledby="headingDrone" data-parent="#accordion_by_category">
+        <div id="collapseApple" class="panel-collapse collapse" aria-labelledby="headingApple" data-parent="#accordion_by_supplier">
             <div class="panel-body">
                 <div class="container">
-                    <div id="drones" class="row list-group">
-                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${priceless}">
+                    <div id="apple" class="row list-group">
+                        <div class="item col-xs-4 col-lg-4" th:each="prod,iterStat : ${fate}">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                                 <div class="caption">
@@ -186,6 +187,7 @@
         </div>
     </div>
 </div>
+
 
 <div th:replace="footer.html :: copy"></div>
 

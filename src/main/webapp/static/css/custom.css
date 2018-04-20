@@ -1,8 +1,59 @@
 .glyphicon {
     margin-right:5px;
 }
+body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center, .row.cart-body, .footer.panel.panel-default {
+    margin: 0px;
+    background-image: url("/static/img/background.jpg") !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.panel.panel-default, .panel-heading.well.well-sm, .panel-info > .panel-heading {
+    margin-top: 0px !important;
+    background-image: url("/static/img/background-stars.jpeg") !important;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.95;
+}
+
+.well {
+    margin-top: 20px;
+     margin-bottom: 0px !important;
+ }
+
+.panel-group{
+    margin-bottom: 0px;
+}
+
+h1{
+    font-family: 'Playfair Display SC', serif;
+    color: rgba(85, 80, 133, 0.8);
+    margin-right: 80px;
+}
+
+span.badge.cart-image{
+    position: absolute;
+    right: -2px;
+    top: 15px;
+    text-align: center;
+    border-radius: 20px 20px 20px 20px;
+    padding:5px 10px;
+    font-size:15px;
+}
+
+div.badge-cart{
+    position:relative;
+    padding-top:20px;
+}
+
+.panel-title .btn.btn-link, .panel-title .btb.btn-link:visited, .panel-title .btn.btn-link:focus{
+    color: white;
+}
 .thumbnail
 {
+    background-color: #b9b9b9;
     margin-bottom: 20px;
     padding: 0px;
     -webkit-border-radius: 0px;
@@ -50,8 +101,14 @@
 
 .item.list-group-item img
 {
-    float: left;
+    float: bottom;
 }
+
+.review-image
+{
+    padding: 0px 100px 0px 500px;
+}
+
 .item.list-group-item:after
 {
     clear: both;
@@ -60,3 +117,26 @@
 {
     margin: 0 0 11px;
 }
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    color: #eee;
+    text-decoration: none;
+}
+
+img.group.list-group-image{
+    width: 400px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.form-control.col-md-12 {
+    width: 50%;
+}
+
+.container, .container.wrapper {
+    padding: 0px;
+}
+
