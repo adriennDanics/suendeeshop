@@ -48,8 +48,8 @@ div.badge-cart{
     padding-top:20px;
 }
 
-.panel-title btn.btn-link{
-    color: #f1f1f1;
+.panel-title .btn.btn-link, .panel-title .btb.btn-link:visited, .panel-title .btn.btn-link:focus{
+    color: white;
 }
 .thumbnail
 {
