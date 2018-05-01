@@ -2,7 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ShoppingCart;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -22,17 +22,18 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ShoppingCartMem shoppingCart = new ShoppingCartMem();
         HttpSession session = req.getSession(true);
+        ShoppingCartDao shoppingCartDao;
         if(session.isNew()){
-            session.setAttribute("cart", shoppingCart);
+            shoppingCartDao = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCartDao);
         } else {
-            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+           shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
-                shoppingCart.clear();
+                shoppingCartDao.clear();
             }
         }
 
@@ -49,7 +50,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("powerUps", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("materialGoods", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("priceless", productDataStore.getBy(productCategoryDataStore.find(4)));
-        context.setVariable("cart", shoppingCart.length());
+        context.setVariable("cart", shoppingCartDao.length());
         engine.process("product/index.html", context, resp.getWriter());
     }
 

@@ -1,11 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ShoppingCart;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ShoppingCartMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -16,8 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/item"})
@@ -25,9 +21,23 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCart shoppingCart = new ShoppingCartMem();
-        Map<Product, Integer> products = ((ShoppingCartMem) shoppingCart).getAll();
-        int subtotal = 0;
+        HttpSession session = req.getSession(true);
+        ShoppingCartDao shoppingCartDao;
+        if(session.isNew()){
+            shoppingCartDao = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCartDao);
+        } else {
+            shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
+        }
+        String origin = req.getHeader("referer");
+        if(origin != null){
+            if (origin.equals("http://localhost:8080/card")) {
+                shoppingCartDao.clear();
+            }
+        }
+
+        Map<Product, Integer> products = shoppingCartDao.getAll();
+        float subtotal = 0;
         for (Product key: products.keySet()) {
             subtotal += key.getDefaultPrice()*products.get(key);
         }
@@ -43,7 +53,7 @@ public class Checkout extends HttpServlet {
         context.setVariable("subtotal", subtotal);
         context.setVariable("shipping", "$10");
         context.setVariable("total", subtotal+10);
-        context.setVariable("shoppingCart", shoppingCart);
+        context.setVariable("shoppingCart", shoppingCartDao);
         engine.process("product/item.html", context, resp.getWriter());
     }
 
