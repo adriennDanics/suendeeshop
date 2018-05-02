@@ -5,7 +5,7 @@ import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.ShoppingCartMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -28,10 +28,10 @@ public class ProductControllerBySupplier extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartMem();
+            shoppingCart = new ShoppingCartDaoMem();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){

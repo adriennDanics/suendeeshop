@@ -5,7 +5,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.*;
 
-public class ShoppingCartMem implements ShoppingCartDao {
+public class ShoppingCartDaoMem implements ShoppingCartDao {
     private Map<Product, Integer> shoppingCartMap = new HashMap<>();
     private int DEFAULTVALUE = 1;
     private int checkNumber = shoppingCartMap.size();
