@@ -22,21 +22,21 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(true);
-        ShoppingCartDao shoppingCartDao;
+        ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCartDao = new ShoppingCartMem();
-            session.setAttribute("cart", shoppingCartDao);
+            shoppingCart = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
-                shoppingCartDao.clear();
+                shoppingCart.clear();
             }
         }
 
-        Map<Product, Integer> products = shoppingCartDao.getAll();
+        Map<Product, Integer> products = shoppingCart.getAll();
         float subtotal = 0;
         for (Product key: products.keySet()) {
             subtotal += key.getDefaultPrice()*products.get(key);
@@ -53,7 +53,7 @@ public class Checkout extends HttpServlet {
         context.setVariable("subtotal", subtotal);
         context.setVariable("shipping", "$10");
         context.setVariable("total", subtotal+10);
-        context.setVariable("shoppingCart", shoppingCartDao);
+        context.setVariable("shoppingCart", shoppingCart);
         engine.process("product/item.html", context, resp.getWriter());
     }
 

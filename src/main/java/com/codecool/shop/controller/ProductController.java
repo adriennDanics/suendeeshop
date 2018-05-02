@@ -23,17 +23,17 @@ public class ProductController extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         HttpSession session = req.getSession(true);
-        ShoppingCartDao shoppingCartDao;
+        ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCartDao = new ShoppingCartMem();
-            session.setAttribute("cart", shoppingCartDao);
+            shoppingCart = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCart);
         } else {
-           shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
+           shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
-                shoppingCartDao.clear();
+                shoppingCart.clear();
             }
         }
 
@@ -50,7 +50,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("powerUps", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("materialGoods", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("priceless", productDataStore.getBy(productCategoryDataStore.find(4)));
-        context.setVariable("cart", shoppingCartDao.length());
+        context.setVariable("cart", shoppingCart.length());
         engine.process("product/index.html", context, resp.getWriter());
     }
 

@@ -26,17 +26,17 @@ public class ProductControllerBySupplier extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         HttpSession session = req.getSession(true);
-        ShoppingCartDao shoppingCartDao;
+        ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCartDao = new ShoppingCartMem();
-            session.setAttribute("cart", shoppingCartDao);
+            shoppingCart = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
-                shoppingCartDao.clear();
+                shoppingCart.clear();
             }
         }
 
@@ -53,7 +53,7 @@ public class ProductControllerBySupplier extends HttpServlet {
         context.setVariable("higherPower", productDataStore.getBy(supplierDataStore.find(2)));
         context.setVariable("innerVoice", productDataStore.getBy(supplierDataStore.find(3)));
         context.setVariable("fate", productDataStore.getBy(supplierDataStore.find(4)));
-        context.setVariable("cart", shoppingCartDao.length());
+        context.setVariable("cart", shoppingCart.length());
         engine.process("product/suppliers.html", context, resp.getWriter());
     }
 

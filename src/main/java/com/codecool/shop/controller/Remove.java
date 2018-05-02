@@ -20,20 +20,20 @@ public class Remove extends HttpServlet {
 
         int idInt = Integer.parseInt(id);
         HttpSession session = req.getSession(true);
-        ShoppingCartDao shoppingCartDao;
+        ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCartDao = new ShoppingCartMem();
-            session.setAttribute("cart", shoppingCartDao);
+            shoppingCart = new ShoppingCartMem();
+            session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCartDao = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
             if (origin.equals("http://localhost:8080/card")) {
-                shoppingCartDao.clear();
+                shoppingCart.clear();
             }
         }
-        shoppingCartDao.remove(idInt);
+        shoppingCart.remove(idInt);
         String whereFrom = req.getHeader("referer");;
         resp.sendRedirect(whereFrom);
     }
