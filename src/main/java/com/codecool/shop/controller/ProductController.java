@@ -2,7 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.ShoppingCart;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -22,12 +22,13 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        ShoppingCartMem shoppingCart = new ShoppingCartMem();
         HttpSession session = req.getSession(true);
+        ShoppingCartDao shoppingCart;
         if(session.isNew()){
+            shoppingCart = new ShoppingCartMem();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+           shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
