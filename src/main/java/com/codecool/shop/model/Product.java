@@ -1,6 +1,7 @@
 package com.codecool.shop.model;
 
 import java.util.Currency;
+import java.util.Objects;
 
 public class Product extends BaseModel {
 
@@ -75,4 +76,6 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+
 }

@@ -3,10 +3,9 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.ShoppingCartMem;
+import com.codecool.shop.model.ProductCategory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -20,15 +19,15 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJDBC.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoJDBC.getInstance();
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartMem();
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
         } else {
-           shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+           shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){

@@ -1,7 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.implementation.ShoppingCartMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,10 +23,10 @@ public class Remove extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartMem();
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){

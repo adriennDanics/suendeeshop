@@ -2,7 +2,8 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.implementation.ShoppingCartMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -24,10 +25,10 @@ public class CardPayment extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartMem();
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
