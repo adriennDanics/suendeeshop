@@ -17,6 +17,8 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
     private static final String DATABASE = "jdbc:postgresql://" + properties.getProperty("url") + "/" + properties.getProperty("database");
     private static final String USER = properties.getProperty("user");
     private static final String PASSWORD = properties.getProperty("password");
+
+    private List<ProductCategory> productCategories = new ArrayList<>();
     private static ProductCategoryDaoJDBC instance = null;
 
 
@@ -69,20 +71,22 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return new ProductCategory(name, department, description);
+        ProductCategory lofasz = new ProductCategory(name, department, description);
+        lofasz.setId(id);
+        return  lofasz;
     }
 
     @Override
     public List<ProductCategory> getAll() {
-        List<ProductCategory> productCategories = new ArrayList<>();
-
         try(Connection con = getConnection()) {
             String query = "SELECT id FROM productcategories WHERE name IS NOT NULL ;";
             PreparedStatement statement = con.prepareStatement(query);
             ResultSet results = statement.executeQuery();
 
             while (results.next()){
-                productCategories.add(this.find(results.getInt("id")));
+                Integer currentId = results.getInt("id");
+                ProductCategory categoryToAdd = this.find(currentId);
+                productCategories.add(categoryToAdd);
             }
 
         } catch (SQLException ex) {

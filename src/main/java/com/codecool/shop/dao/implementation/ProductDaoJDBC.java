@@ -80,7 +80,9 @@ public class ProductDaoJDBC implements ProductDao {
         }
         ProductCategoryDao productCategory = ProductCategoryDaoJDBC.getInstance();
         SupplierDao supplier = SupplierDaoJDBC.getInstance();
-        return new Product(name, defaultPrice, "USD", description, productCategory.find(productCategoryId), supplier.find(supplierId));
+        Product newProduct = new Product(name, defaultPrice, "USD", description, productCategory.find(productCategoryId), supplier.find(supplierId));
+        newProduct.setId(id);
+        return newProduct;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
@@ -24,10 +25,10 @@ public class Checkout extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoMem();
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartDaoMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
@@ -59,7 +60,7 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCartDaoMem shoppingCart = new ShoppingCartDaoMem();
+        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC();
         shoppingCart.name = req.getParameter("name");
         shoppingCart.billing_address = req.getParameter("billing_address");
         shoppingCart.shipping_address = req.getParameter("shipping_address");

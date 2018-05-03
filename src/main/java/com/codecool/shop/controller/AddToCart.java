@@ -2,7 +2,9 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.implementation.ProductDaoJDBC;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import com.codecool.shop.model.Product;
 
@@ -25,10 +27,10 @@ public class AddToCart extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoMem();
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
         } else {
-            shoppingCart = (ShoppingCartDaoMem) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
@@ -36,7 +38,7 @@ public class AddToCart extends HttpServlet {
                 shoppingCart.clear();
             }
         }
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoJDBC.getInstance();
         Product addThisToCart = productDataStore.find(idInt);
         shoppingCart.add(addThisToCart);
         String whereFrom = req.getHeader("referer");

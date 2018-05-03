@@ -53,9 +53,5 @@ public class DBTest {
         Assert.assertEquals("testDPT", dept);
         Assert.assertEquals("testDescr", descr);
 
-
-
     }
-
-
 }
