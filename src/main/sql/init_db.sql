@@ -1,8 +1,9 @@
-DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS productCategories;
 DROP TABLE IF EXISTS suppliers;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS shoppingCart;
+DROP TABLE IF EXISTS products;
+
 DROP SEQUENCE IF EXISTS product_id_seq;
 DROP SEQUENCE IF EXISTS productCat_id_seq;
 DROP SEQUENCE IF EXISTS supplier_id_seq;
@@ -81,7 +82,8 @@ CREATE TABLE shoppingCart
 (
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('cart_id_sequence'),
 user_id INT Not NULL REFERENCES users(id),
-product_id INT Not NULL REFERENCES products(id)
+product_id INT Not NULL REFERENCES products(id),
+order_number INT
 );
 
 CREATE SEQUENCE userDet_id_sequence

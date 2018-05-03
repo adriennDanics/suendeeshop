@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 
 @WebServlet(urlPatterns = {"/item"})
 public class Checkout extends HttpServlet {
@@ -25,7 +26,10 @@ public class Checkout extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoJDBC();
+            Random r = new Random();
+            int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
+            session.setAttribute("order_number", orderNumber);
+            shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
             session.setAttribute("cart", shoppingCart);
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
@@ -60,7 +64,9 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC();
+        Random r = new Random();
+        int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
+        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
         shoppingCart.name = req.getParameter("name");
         shoppingCart.billing_address = req.getParameter("billing_address");
         shoppingCart.shipping_address = req.getParameter("shipping_address");

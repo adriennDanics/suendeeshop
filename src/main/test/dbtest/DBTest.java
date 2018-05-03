@@ -15,6 +15,7 @@ import com.codecool.shop.*;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.Random;
 
 public class DBTest {
 
@@ -161,7 +162,9 @@ public class DBTest {
     @Test
     public void testShoppingCartDaoJDBCAdd(){
         int recordsBefore = countRecords("shoppingcart");
-        ShoppingCartDao test = ShoppingCartDaoJDBC.getInstance();
+        Random r = new Random();
+        int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
+        ShoppingCartDao test = new ShoppingCartDaoJDBC(orderNumber);
 
         test.add(ProductDaoJDBC.getInstance().find(getMaxId("products")));
         int recordsAfter = countRecords("shoppingcart");
@@ -170,7 +173,9 @@ public class DBTest {
 
     @Test
     public void testShoppingCartDaoJDBCRemove(){
-        ShoppingCartDao test = ShoppingCartDaoJDBC.getInstance();
+        Random r = new Random();
+        int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
+        ShoppingCartDao test = new ShoppingCartDaoJDBC(orderNumber);
         test.add(ProductDaoJDBC.getInstance().find(getMaxId("products")));
         int recordsBefore = countRecords("shoppingcart");
 
