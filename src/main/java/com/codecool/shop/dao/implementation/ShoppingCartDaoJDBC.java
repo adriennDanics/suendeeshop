@@ -25,8 +25,14 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
 
     private Map<Product, Integer> shoppingCartMap = new HashMap<>();
     private int checkNumber;
+    private static ShoppingCartDaoJDBC instance = null;
 
-
+    public static ShoppingCartDaoJDBC getInstance() {
+        if (instance == null) {
+            instance = new ShoppingCartDaoJDBC();
+        }
+        return instance;
+    }
 
     @Override
     public void add(Product product) {
