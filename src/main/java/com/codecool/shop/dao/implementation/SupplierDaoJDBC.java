@@ -46,9 +46,9 @@ public class SupplierDaoJDBC implements SupplierDao{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        Supplier masiklofasz = new Supplier(name, description);
-        masiklofasz.setId(id);
-        return masiklofasz;
+        Supplier newSupplier = new Supplier(name, description);
+        newSupplier.setId(id);
+        return newSupplier;
     }
 
     @Override

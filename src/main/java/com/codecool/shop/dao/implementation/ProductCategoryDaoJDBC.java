@@ -71,9 +71,9 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        ProductCategory lofasz = new ProductCategory(name, department, description);
-        lofasz.setId(id);
-        return  lofasz;
+        ProductCategory newCategory = new ProductCategory(name, department, description);
+        newCategory.setId(id);
+        return  newCategory;
     }
 
     @Override
