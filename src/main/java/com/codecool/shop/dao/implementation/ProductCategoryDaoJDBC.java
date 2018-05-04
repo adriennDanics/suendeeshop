@@ -3,7 +3,6 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.config.loadConfigJDBC;
-import com.sun.org.apache.regexp.internal.RE;
 
 
 import java.sql.*;
@@ -46,7 +45,15 @@ public class ProductCategoryDaoJDBC implements ProductCategoryDao {
 
     @Override
     public void remove(int id) {
-        //TODO
+        try(Connection con = getConnection()) {
+            String query = "DELETE FROM productcategories WHERE id = ?;";
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.execute();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

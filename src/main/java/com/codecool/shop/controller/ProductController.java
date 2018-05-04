@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.Random;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -24,7 +25,10 @@ public class ProductController extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoJDBC();
+            Random r = new Random();
+            int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
+            session.setAttribute("order_number", orderNumber);
+            shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
             session.setAttribute("cart", shoppingCart);
         } else {
            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
