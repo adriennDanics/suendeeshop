@@ -10,10 +10,12 @@ import java.security.spec.InvalidKeySpecException;
 public class User extends BaseModel {
     private String userName;
     private String password;
+    private String email;
 
-    public User(String userName, String password){
+    public User(String userName, String password, String email){
         super(userName);
         this.userName = userName;
+        this.email = email;
         try{
             this.password = generateStrongPasswordHash(password);
         } catch (NoSuchAlgorithmException ex){
@@ -26,6 +28,10 @@ public class User extends BaseModel {
     @Override
     public String getName() {
         return userName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     private static String generateStrongPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {

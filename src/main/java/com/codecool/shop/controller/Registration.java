@@ -28,7 +28,7 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User newUser = new User(req.getParameter("name"), req.getParameter("password"));
+        User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
         UserDAO addUser = UserDaoJDBC.getInstance();
         addUser.add(newUser);
         resp.sendRedirect("/");

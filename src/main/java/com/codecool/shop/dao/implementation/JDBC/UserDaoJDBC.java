@@ -4,10 +4,6 @@ import com.codecool.shop.config.loadConfigJDBC;
 import com.codecool.shop.dao.UserDAO;
 import com.codecool.shop.model.User;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.Properties;
 
@@ -29,10 +25,11 @@ public class UserDaoJDBC implements UserDAO{
     @Override
     public void add(User user) {
         try(Connection con = getConnection()) {
-            String query = "INSERT INTO users(user_name, password) VALUES (?,?);";
+            String query = "INSERT INTO users(user_name, email, password) VALUES (?,?,?);";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, user.getName());
-            statement.setString(2, user.getPassword());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, user.getPassword());
             statement.execute();
 
         } catch (SQLException ex) {
@@ -57,6 +54,7 @@ public class UserDaoJDBC implements UserDAO{
     public User find(int id) {
         String name = null;
         String password = null;
+        String email = null;
 
         try(Connection con = getConnection()) {
             String query = "SELECT * FROM users WHERE id = ?;";
@@ -66,13 +64,14 @@ public class UserDaoJDBC implements UserDAO{
 
             while (results.next()){
                 name = results.getString("name");
+                email = results.getString("email");
                 password = results.getString("description");
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        User newSupplier = new User(name, password);
+        User newSupplier = new User(name, email, password);
         newSupplier.setId(id);
         return newSupplier;
     }
