@@ -1,8 +1,8 @@
+DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS productCategories;
 DROP TABLE IF EXISTS suppliers;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS shoppingCart;
-DROP TABLE IF EXISTS products;
 
 DROP SEQUENCE IF EXISTS product_id_seq;
 DROP SEQUENCE IF EXISTS productCat_id_seq;
@@ -67,7 +67,8 @@ CREATE SEQUENCE user_id_sequence
 CREATE TABLE users
 (
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('user_id_sequence'),
-user_name VARCHAR(255) NOT NULL UNIQUE, 
+user_name VARCHAR(255) NOT NULL UNIQUE,
+email VARCHAR(255) NOT NULL,
 password VARCHAR(255) NOT NULL
 );
 

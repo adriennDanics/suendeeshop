@@ -1,8 +1,7 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.JDBC;
 
 import com.codecool.shop.config.loadConfigJDBC;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import java.sql.*;

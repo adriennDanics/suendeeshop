@@ -1,11 +1,9 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementation.JDBC;
 
 import com.codecool.shop.config.loadConfigJDBC;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.sun.javafx.collections.MappingChange;
 
 import java.sql.*;
 import java.util.*;

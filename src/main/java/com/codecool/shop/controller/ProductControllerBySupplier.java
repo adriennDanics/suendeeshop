@@ -3,8 +3,11 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.implementation.JDBC.ProductDaoJDBC;
+import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
+import com.codecool.shop.dao.implementation.JDBC.SupplierDaoJDBC;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -26,14 +29,17 @@ public class ProductControllerBySupplier extends HttpServlet {
         SupplierDao supplierDataStore = SupplierDaoJDBC.getInstance();
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
+        User user;
         if(session.isNew()){
             Random r = new Random();
             int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
             session.setAttribute("order_number", orderNumber);
             shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
             session.setAttribute("cart", shoppingCart);
+            session.setAttribute("user", null);
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
+
         }
         String origin = req.getHeader("referer");
         if(origin != null){
@@ -56,6 +62,7 @@ public class ProductControllerBySupplier extends HttpServlet {
         context.setVariable("innerVoice", productDataStore.getBy(supplierDataStore.find(3)));
         context.setVariable("fate", productDataStore.getBy(supplierDataStore.find(4)));
         context.setVariable("cart", shoppingCart.length());
+        context.setVariable("user", session.getAttribute("user"));
         engine.process("product/suppliers.html", context, resp.getWriter());
     }
 
