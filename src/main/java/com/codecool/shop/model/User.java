@@ -2,27 +2,37 @@ package com.codecool.shop.model;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Random;
 
 public class User extends BaseModel {
+    private static final Random RANDOM = new SecureRandom();
+    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final int ITERATIONS = 10000;
+    private static final int KEY_LENGTH = 256;
     private String userName;
     private String password;
     private String email;
+    private String salt;
 
     public User(String userName, String password, String email){
         super(userName);
         this.userName = userName;
         this.email = email;
-        try{
-            this.password = generateStrongPasswordHash(password);
-        } catch (NoSuchAlgorithmException ex){
-            ex.printStackTrace();
-        } catch (InvalidKeySpecException e){
-            e.printStackTrace();
-        }
+        this.salt = this.getSalt(30);
+        this.password = generateSecurePassword(password, salt);
+    }
+
+    public User(String userName, String password, String email, String salt){
+        super(userName);
+        this.userName = userName;
+        this.email = email;
+        this.salt = salt;
+        this.password = password;
     }
 
     @Override
@@ -34,73 +44,51 @@ public class User extends BaseModel {
         return email;
     }
 
-    private static String generateStrongPasswordHash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        int iterations = 1000;
-        char[] chars = password.toCharArray();
-        byte[] salt = getSalt();
-
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        try{
-            byte[] hash = skf.generateSecret(spec).getEncoded();
-            return iterations + ":" + toHex(salt) + ":" + toHex(hash);
-        }catch (InvalidKeySpecException ex){
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    private static byte[] getSalt() throws NoSuchAlgorithmException {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
+    public String getSalt() {
         return salt;
     }
 
-    private static String toHex(byte[] array) throws NoSuchAlgorithmException {
-        BigInteger bi = new BigInteger(1, array);
-        String hex = bi.toString(16);
-        int paddingLength = (array.length * 2) - hex.length();
-        if(paddingLength > 0)
-        {
-            return String.format("%0"  +paddingLength + "d", 0) + hex;
-        }else{
-            return hex;
+    private String getSalt(int length) {
+        StringBuilder returnValue = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            returnValue.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
         }
+        return new String(returnValue);
+    }
+
+    private byte[] generateStrongPasswordHash(char[] password, byte[] salt) {
+        PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
+        Arrays.fill(password, Character.MIN_VALUE);
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            return skf.generateSecret(spec).getEncoded();
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
+        } finally {
+            spec.clearPassword();
+        }
+    }
+
+    public String generateSecurePassword(String password, String salt) {
+        String returnValue = null;
+        byte[] securePassword = generateStrongPasswordHash(password.toCharArray(), salt.getBytes());
+
+        returnValue = Base64.getEncoder().encodeToString(securePassword);
+
+        return returnValue;
+    }
+
+    public boolean passwordMatch(String providedPassword, String securedPassword, String salt) {
+        boolean returnValue = false;
+
+        String newSecurePassword = generateSecurePassword(providedPassword, salt);
+
+        returnValue = newSecurePassword.equalsIgnoreCase(securedPassword);
+
+        return returnValue;
     }
 
     public String getPassword() {
         return password;
-    }
-
-    public boolean passwordMatch(String plainText, String hashedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        String[] parts = hashedPassword.split(":");
-        int iterations = Integer.parseInt(parts[0]);
-        byte[] salt = fromHex(parts[1]);
-        byte[] hash = fromHex(parts[2]);
-
-        PBEKeySpec spec = new PBEKeySpec(plainText.toCharArray(), salt, iterations, hash.length * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        try {
-            byte[] testHash = skf.generateSecret(spec).getEncoded();
-            int diff = hash.length ^ testHash.length;
-            for(int i = 0; i < hash.length && i < testHash.length; i++)
-            {
-                diff |= hash[i] ^ testHash[i];
-            }
-            return diff == 0;
-        } catch (InvalidKeySpecException ex){
-
-        }
-        return false;
-    }
-
-    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException {
-        byte[] bytes = new byte[hex.length() / 2];
-        for(int i = 0; i<bytes.length ;i++)
-        {
-            bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
-        }
-        return bytes;
     }
 }

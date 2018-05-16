@@ -37,9 +37,13 @@ public class UserDaoMem implements UserDAO{
         data.remove(find(id));
     }
 
-    @Override
     public User find(int id) {
         return data.stream().filter(t-> t.getId() == id).findFirst().orElse(null);
+    }
+
+    @Override
+    public User find(String userName) {
+        return data.stream().filter(t-> t.getName().equals(userName)).findFirst().orElse(null);
     }
 
 }

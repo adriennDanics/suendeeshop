@@ -25,11 +25,12 @@ public class UserDaoJDBC implements UserDAO{
     @Override
     public void add(User user) {
         try(Connection con = getConnection()) {
-            String query = "INSERT INTO users(user_name, email, password) VALUES (?,?,?);";
+            String query = "INSERT INTO users(user_name, email, password, salt) VALUES (?,?,?,?);";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
+            statement.setString(4, user.getSalt());
             statement.execute();
 
         } catch (SQLException ex) {
@@ -51,27 +52,30 @@ public class UserDaoJDBC implements UserDAO{
     }
 
     @Override
-    public User find(int id) {
-        String name = null;
+    public User find(String userName) {
+        int id = 0;
         String password = null;
         String email = null;
+        String salt = null;
 
         try(Connection con = getConnection()) {
-            String query = "SELECT * FROM users WHERE id = ?;";
+            String query = "SELECT * FROM users WHERE user_name = ?;";
             PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setString(1, userName);
             ResultSet results = statement.executeQuery();
 
             while (results.next()){
-                name = results.getString("name");
+                id = results.getInt("id");
                 email = results.getString("email");
-                password = results.getString("description");
+                password = results.getString("password");
+                salt = results.getString("salt");
+
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        User newSupplier = new User(name, email, password);
+        User newSupplier = new User(userName, password, email, salt);
         newSupplier.setId(id);
         return newSupplier;
     }

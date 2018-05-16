@@ -21,12 +21,12 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
     public static String phone_number =DEFAULT_STRING;
     public static String email_address =DEFAULT_STRING;
     private int orderNumber;
+    Random random = new Random();
 
-    private Map<Product, Integer> shoppingCartMap = new HashMap<>();
     private int checkNumber;
 
-    public ShoppingCartDaoJDBC(int orderNumber){
-        this.orderNumber = orderNumber;
+    public ShoppingCartDaoJDBC(){
+        this.orderNumber = random.nextInt(10000);
     }
 
     @Override
@@ -37,12 +37,6 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
             statement.setInt(1, product.getId());
             statement.setInt(2, orderNumber);
             statement.execute();
-            if (shoppingCartMap.containsKey(product)) {
-                Integer value = shoppingCartMap.get(product);
-                shoppingCartMap.put(product, ++value);
-            } else {
-                shoppingCartMap.put(product, 1);
-            }
             ++checkNumber;
 
         } catch (SQLException ex) {
@@ -58,16 +52,6 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
             statement.setInt(1, id);
             statement.setInt(2, orderNumber);
             statement.execute();
-            for (Product cartItem : shoppingCartMap.keySet()) {
-                if (cartItem.getId() == id) {
-                    Integer value = shoppingCartMap.get(cartItem);
-                    if (value > 1) {
-                        shoppingCartMap.put(cartItem, --value);
-                    } else {
-                        shoppingCartMap.remove(cartItem);
-                    }
-                }
-            }
             --checkNumber;
 
         } catch (SQLException ex) {
@@ -78,13 +62,13 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
     @Override
     public Map<Product, Integer> getAll() {
         ProductDao productDao = ProductDaoJDBC.getInstance();
+        Map<Product, Integer> shoppingCartMap = new HashMap<Product, Integer>();
 
         try(Connection con = getConnection()) {
             String query = "SELECT product_id FROM shoppingcart WHERE order_number = ? AND 'user' = 'user';";
             PreparedStatement statement = con.prepareStatement(query);
             statement.setInt(1, orderNumber);
             ResultSet results = statement.executeQuery();
-            shoppingCartMap.clear();
             while (results.next()){
                 Product currentProduct = productDao.find(results.getInt("product_id"));
                 if (shoppingCartMap.containsKey(currentProduct)) {
@@ -108,7 +92,6 @@ public class ShoppingCartDaoJDBC implements ShoppingCartDao {
 
     @Override
     public void clear() {
-        shoppingCartMap.clear();
         checkNumber = 0;
         try(Connection con = getConnection()) {
             String query = "DELETE FROM shoppingcart WHERE order_number = ? AND 'user' = 'user';";

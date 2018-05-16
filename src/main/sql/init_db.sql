@@ -71,7 +71,8 @@ CREATE TABLE users
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('user_id_sequence'),
 user_name VARCHAR(255) NOT NULL UNIQUE,
 email VARCHAR(255) NOT NULL,
-password VARCHAR(255) NOT NULL
+password VARCHAR(255) NOT NULL,
+salt VARCHAR(30) NOT NULL
 );
 
 CREATE SEQUENCE cart_id_sequence

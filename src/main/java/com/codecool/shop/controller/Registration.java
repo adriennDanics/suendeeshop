@@ -2,7 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UserDAO;
-import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.JDBC.UserDaoJDBC;
 import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Properties;
-import javax.activation.*;
 
 @WebServlet(urlPatterns = {"/registration"})
 public class Registration extends HttpServlet {

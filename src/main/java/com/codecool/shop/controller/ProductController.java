@@ -26,10 +26,7 @@ public class ProductController extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            Random r = new Random();
-            int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
-            session.setAttribute("order_number", orderNumber);
-            shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
+            shoppingCart = new ShoppingCartDaoJDBC();
             session.setAttribute("cart", shoppingCart);
             session.setAttribute("user", null);
         } else {
@@ -55,7 +52,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("powerUps", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("materialGoods", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("priceless", productDataStore.getBy(productCategoryDataStore.find(4)));
-        context.setVariable("cart", shoppingCart.length());
+        context.setVariable("cart", "0");
         context.setVariable("user", session.getAttribute("user"));
         engine.process("product/index.html", context, resp.getWriter());
     }
