@@ -23,7 +23,7 @@ public class Remove extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoJDBC();
+            shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");

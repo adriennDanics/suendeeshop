@@ -2,6 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UserDAO;
+import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.JDBC.UserDaoJDBC;
 import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
@@ -36,7 +37,8 @@ public class LoginLogout extends HttpServlet {
         boolean rightPassword = false;
         rightPassword = loginUser.passwordMatch(req.getParameter("password"), loginUser.getPassword(), loginUser.getSalt());
         if(rightPassword){
-            session.setAttribute("user", loginUser.getName());
+            session.setAttribute("user", loginUser.getId());
+            session.setAttribute("cart", new ShoppingCartDaoJDBC(loginUser.getId()));
             resp.sendRedirect("/");
         } else {
             System.out.println(req.getParameter("password"));

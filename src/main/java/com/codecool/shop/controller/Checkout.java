@@ -25,7 +25,7 @@ public class Checkout extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoJDBC();
+            shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
@@ -60,7 +60,7 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC();
+        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC(0);
         shoppingCart.name = req.getParameter("name");
         shoppingCart.billing_address = req.getParameter("billing_address");
         shoppingCart.shipping_address = req.getParameter("shipping_address");

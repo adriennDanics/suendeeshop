@@ -80,6 +80,23 @@ public class UserDaoJDBC implements UserDAO{
         return newSupplier;
     }
 
+    public int getMostRecentUserId(){
+        int userId = 0;
+        try(Connection con = getConnection()) {
+            String query = "SELECT MAX(id) FROM users;";
+            PreparedStatement statement = con.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                userId = resultSet.getInt("id");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return userId;
+    }
+
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(
                 DATABASE,

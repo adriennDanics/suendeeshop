@@ -26,9 +26,9 @@ public class ProductController extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            shoppingCart = new ShoppingCartDaoJDBC();
+            shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
-            session.setAttribute("user", null);
+            session.setAttribute("user", 0);
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
