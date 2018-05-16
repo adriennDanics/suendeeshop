@@ -33,7 +33,8 @@ public class ProductControllerBySupplier extends HttpServlet {
         if(session.isNew()){
             shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
-            session.setAttribute("user", "Register");
+            session.setAttribute("user", 0);
+            session.setAttribute("user_name", "Guest");
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
 

@@ -29,6 +29,7 @@ public class ProductController extends HttpServlet {
             shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
             session.setAttribute("user", 0);
+            session.setAttribute("user_name", "Guest");
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
@@ -52,7 +53,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("powerUps", productDataStore.getBy(productCategoryDataStore.find(2)));
         context.setVariable("materialGoods", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("priceless", productDataStore.getBy(productCategoryDataStore.find(4)));
-        context.setVariable("cart", "0");
+        context.setVariable("cart", shoppingCart.length());
         context.setVariable("user", session.getAttribute("user"));
         engine.process("product/index.html", context, resp.getWriter());
     }
