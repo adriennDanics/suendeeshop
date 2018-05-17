@@ -7,6 +7,6 @@ import java.security.spec.InvalidKeySpecException;
 
 public interface UserDAO {
     void add(User supplier);
-    User find(int id);
+    User find(String userName);
     void remove(int id);
 }

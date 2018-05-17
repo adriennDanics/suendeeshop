@@ -1,6 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.UserDAO;
 import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.JDBC.UserDaoJDBC;
@@ -16,9 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Properties;
-import javax.activation.*;
 
 @WebServlet(urlPatterns = {"/registration"})
 public class Registration extends HttpServlet {
@@ -34,7 +35,7 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
-        UserDAO addUser = UserDaoJDBC.getInstance();
+        UserDaoJDBC addUser = UserDaoJDBC.getInstance();
         addUser.add(newUser);
 
 
@@ -90,6 +91,9 @@ public class Registration extends HttpServlet {
             mex.printStackTrace();
         }
 
+        HttpSession httpSession = req.getSession(true);
+        ShoppingCartDao shoppingCart = new ShoppingCartDaoJDBC(addUser.getMostRecentUserId());
+        httpSession.setAttribute("cart", shoppingCart);
 
         resp.sendRedirect("/");
     }

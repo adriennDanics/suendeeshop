@@ -71,7 +71,8 @@ CREATE TABLE users
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('user_id_sequence'),
 user_name VARCHAR(255) NOT NULL UNIQUE,
 email VARCHAR(255) NOT NULL,
-password VARCHAR(255) NOT NULL
+password VARCHAR(255) NOT NULL,
+salt VARCHAR(30) NOT NULL
 );
 
 CREATE SEQUENCE cart_id_sequence
@@ -84,7 +85,7 @@ CREATE SEQUENCE cart_id_sequence
 CREATE TABLE shoppingCart
 (
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('cart_id_sequence'),
-user_id INT Not NULL REFERENCES users(id),
+user_id INT Not NULL REFERENCES users(id) DEFAULT 0,
 product_id INT Not NULL REFERENCES products(id),
 order_number INT
 );
@@ -105,6 +106,8 @@ phone varchar(255),
 shipping_address varchar(255) NOT NULL,
 billing_address varchar(255) NOT NULL
 );
+
+INSERT INTO users (id, user_name, email, password, salt) VALUES (0, 'Guest', 'Guest', 'Guest', 'Guest');
 
 INSERT INTO suppliers (name, description) VAlUES ('Nature', 'All around and provides');
 INSERT INTO suppliers (name, description) VAlUES ('Higher Power', 'Cosmic power (existence debated)');

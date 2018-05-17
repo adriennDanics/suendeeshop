@@ -31,12 +31,10 @@ public class ProductControllerBySupplier extends HttpServlet {
         ShoppingCartDao shoppingCart;
         User user;
         if(session.isNew()){
-            Random r = new Random();
-            int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
-            session.setAttribute("order_number", orderNumber);
-            shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
+            shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
-            session.setAttribute("user", null);
+            session.setAttribute("user", 0);
+            session.setAttribute("user_name", "Guest");
         } else {
             shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
 
