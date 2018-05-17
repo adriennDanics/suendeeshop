@@ -4,6 +4,7 @@ import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.User;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
-@WebServlet(urlPatterns = {"/item"})
+@WebServlet(urlPatterns = {"/checkout"})
 public class Checkout extends HttpServlet {
 
     @Override
@@ -60,7 +61,8 @@ public class Checkout extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCartDaoJDBC shoppingCart = new ShoppingCartDaoJDBC(0);
+        HttpSession session = req.getSession(true);
+        ShoppingCartDaoJDBC shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         shoppingCart.name = req.getParameter("name");
         shoppingCart.billing_address = req.getParameter("billing_address");
         shoppingCart.shipping_address = req.getParameter("shipping_address");
@@ -69,8 +71,9 @@ public class Checkout extends HttpServlet {
         if (req.getParameter("pay_with_card") != null) {
             resp.sendRedirect("/card");
         } else {
-            resp.sendRedirect("/");
             shoppingCart.clear();
+            System.out.println();
+            resp.sendRedirect("/");
         }
     }
 }
