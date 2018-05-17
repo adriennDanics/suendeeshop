@@ -3,9 +3,10 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
-import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.dao.implementation.JDBC.ProductCategoryDaoJDBC;
+import com.codecool.shop.dao.implementation.JDBC.ProductDaoJDBC;
+import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -25,13 +26,12 @@ public class ProductController extends HttpServlet {
         HttpSession session = req.getSession(true);
         ShoppingCartDao shoppingCart;
         if(session.isNew()){
-            Random r = new Random();
-            int orderNumber = r.nextInt((1000 - 1) + 1) + 1;
-            session.setAttribute("order_number", orderNumber);
-            shoppingCart = new ShoppingCartDaoJDBC(orderNumber);
+            shoppingCart = new ShoppingCartDaoJDBC(0);
             session.setAttribute("cart", shoppingCart);
+            session.setAttribute("user", 0);
+            session.setAttribute("user_name", "Guest");
         } else {
-           shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
+            shoppingCart = (ShoppingCartDaoJDBC) session.getAttribute("cart");
         }
         String origin = req.getHeader("referer");
         if(origin != null){
@@ -54,6 +54,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("materialGoods", productDataStore.getBy(productCategoryDataStore.find(3)));
         context.setVariable("priceless", productDataStore.getBy(productCategoryDataStore.find(4)));
         context.setVariable("cart", shoppingCart.length());
+        context.setVariable("user", session.getAttribute("user"));
         engine.process("product/index.html", context, resp.getWriter());
     }
 

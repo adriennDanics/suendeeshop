@@ -1,14 +1,16 @@
-DROP TABLE IF EXISTS productCategories;
-DROP TABLE IF EXISTS suppliers;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS shoppingCart;
-DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS shoppingCart CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS productCategories CASCADE;
+DROP TABLE IF EXISTS suppliers CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS userDetails CASCADE;
 
-DROP SEQUENCE IF EXISTS product_id_seq;
-DROP SEQUENCE IF EXISTS productCat_id_seq;
-DROP SEQUENCE IF EXISTS supplier_id_seq;
-DROP SEQUENCE IF EXISTS user_id_seq;
-DROP SEQUENCE IF EXISTS cart_id_seq;
+DROP SEQUENCE IF EXISTS product_id_sequence CASCADE;
+DROP SEQUENCE IF EXISTS productCat_id_sequence CASCADE ;
+DROP SEQUENCE IF EXISTS supplier_id_sequence CASCADE ;
+DROP SEQUENCE IF EXISTS user_id_sequence CASCADE ;
+DROP SEQUENCE IF EXISTS cart_id_sequence CASCADE ;
+DROP SEQUENCE IF EXISTS userDet_id_sequence CASCADE ;
 
 CREATE SEQUENCE productCat_id_sequence
     START WITH 1
@@ -67,8 +69,10 @@ CREATE SEQUENCE user_id_sequence
 CREATE TABLE users
 (
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('user_id_sequence'),
-user_name VARCHAR(255) NOT NULL UNIQUE, 
-password VARCHAR(255) NOT NULL
+user_name VARCHAR(255) NOT NULL UNIQUE,
+email VARCHAR(255) NOT NULL,
+password VARCHAR(255) NOT NULL,
+salt VARCHAR(30) NOT NULL
 );
 
 CREATE SEQUENCE cart_id_sequence
@@ -81,7 +85,7 @@ CREATE SEQUENCE cart_id_sequence
 CREATE TABLE shoppingCart
 (
 id INT NOT NULL PRIMARY KEY DEFAULT nextval('cart_id_sequence'),
-user_id INT Not NULL REFERENCES users(id),
+user_id INT Not NULL REFERENCES users(id) DEFAULT 0,
 product_id INT Not NULL REFERENCES products(id),
 order_number INT
 );
@@ -102,6 +106,8 @@ phone varchar(255),
 shipping_address varchar(255) NOT NULL,
 billing_address varchar(255) NOT NULL
 );
+
+INSERT INTO users (id, user_name, email, password, salt) VALUES (0, 'Guest', 'Guest', 'Guest', 'Guest');
 
 INSERT INTO suppliers (name, description) VAlUES ('Nature', 'All around and provides');
 INSERT INTO suppliers (name, description) VAlUES ('Higher Power', 'Cosmic power (existence debated)');

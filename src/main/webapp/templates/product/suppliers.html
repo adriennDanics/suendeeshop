@@ -37,7 +37,6 @@
 
     <h1 style="padding-right: 90px">Sue N. Dee's Online Shop Of Dreams</h1>
     <div class="badge-cart" style="margin-right: 50px">
-
         <a href="/item">
             <img src="/static/img/supplier.png" height="60" width="60" align="right">
         </a>
@@ -45,6 +44,9 @@
             <span class="badge cart-image" th:text="${cart}">Num</span>
             <img src="/static/img/cart.png" height="60" width="60" align="right">
         </a>
+        <a href="/registration" th:text="${user}">Register</a>
+        <a href="/login">Login</a>
+        <a href="/logout">Logout</a>
     </div>
 </div>
 
