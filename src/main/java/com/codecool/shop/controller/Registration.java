@@ -39,7 +39,7 @@ public class Registration extends HttpServlet {
 
 
         // Recipient's email ID needs to be mentioned.
-        String to = "zibandris@gmail.com";
+        String to = req.getParameter("email");
 
         // Sender's email ID needs to be mentioned
         String from = "SueNDeeShop" +
@@ -81,8 +81,7 @@ public class Registration extends HttpServlet {
             message.setSubject("Thank you for registrating!");
 
             // Now set the actual message
-            message.setText("Thank you for choosing to join our fabulous webshop. We hope you will enjoy our products. Have a nice day!" +
-                    "Best Regards, Sue");
+            message.setText("Dear " + req.getParameter("name") + "," + "\n \nThank you for choosing to join our fabulous webshop.\n \nWe hope you will enjoy our products. Have a nice day!\nBest Regards,\nSue");
 
             // Send message
             Transport.send(message);
