@@ -25,22 +25,33 @@ public class Login extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
+        String origin = req.getHeader("referer");
+        if(origin != null){
+            if (origin.equals("http://localhost:8080/login")) {
+                context.setVariable("message", "Wrong username or password");
+            }else{
+                context.setVariable("message", "");
+            }
+        }
         engine.process("product/login.html", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO findUser = UserDaoJDBC.getInstance();
-        User loginUser = findUser.find(req.getParameter("name"));
-        HttpSession session = req.getSession(true);
-        boolean rightPassword = false;
-        rightPassword = loginUser.passwordMatch(req.getParameter("password"), loginUser.getPassword(), loginUser.getSalt());
-        if(rightPassword){
-            session.setAttribute("user", loginUser.getId());
-            session.setAttribute("cart", new ShoppingCartDaoJDBC(loginUser.getId()));
-            resp.sendRedirect("/");
-        } else {
-            System.out.println(req.getParameter("password"));
+        try{
+            UserDAO findUser = UserDaoJDBC.getInstance();
+            User loginUser = findUser.find(req.getParameter("name"));
+            HttpSession session = req.getSession(true);
+            boolean rightPassword = false;
+            rightPassword = loginUser.passwordMatch(req.getParameter("password"), loginUser.getPassword(), loginUser.getSalt());
+            if(rightPassword){
+                session.setAttribute("user", loginUser.getId());
+                session.setAttribute("cart", new ShoppingCartDaoJDBC(loginUser.getId()));
+                resp.sendRedirect("/");
+            } else {
+                resp.sendRedirect("/login");
+            }
+        } catch (NullPointerException ex){
             resp.sendRedirect("/login");
         }
     }

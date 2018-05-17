@@ -6,6 +6,7 @@ import com.codecool.shop.dao.UserDAO;
 import com.codecool.shop.dao.implementation.JDBC.ShoppingCartDaoJDBC;
 import com.codecool.shop.dao.implementation.JDBC.UserDaoJDBC;
 import com.codecool.shop.model.User;
+import org.postgresql.util.PSQLException;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @WebServlet(urlPatterns = {"/registration"})
@@ -29,72 +31,84 @@ public class Registration extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("recipient", "World");
+        String origin = req.getHeader("referer");
+        if(origin != null){
+            if (origin.equals("http://localhost:8080/registration")) {
+                context.setVariable("message", "This user already exists!");
+            }else{
+                context.setVariable("message", "");
+            }
+        }
         engine.process("product/registration.html", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
-        UserDaoJDBC addUser = UserDaoJDBC.getInstance();
-        addUser.add(newUser);
+        try{
+            UserDaoJDBC checkUser = new UserDaoJDBC();
+            checkUser.find(req.getParameter("name"));
+        }catch (NullPointerException ex){
+            User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
+            UserDaoJDBC addUser = UserDaoJDBC.getInstance();
+            addUser.add(newUser);
+            // Recipient's email ID needs to be mentioned.
+            String to = req.getParameter("email");
 
+            // Sender's email ID needs to be mentioned
+            String from = "SueNDeeShop" +
+                    "@gmail.com";
 
-        // Recipient's email ID needs to be mentioned.
-        String to = req.getParameter("email");
+            // Assuming you are sending email from localhost
+            String host = "0.0.0.0";
 
-        // Sender's email ID needs to be mentioned
-        String from = "SueNDeeShop" +
-                "@gmail.com";
+            // Get system properties
+            Properties properties = new Properties();
 
-        // Assuming you are sending email from localhost
-        String host = "0.0.0.0";
+            properties.put("mail.smtp.starttls.enable", "true");
+            properties.put("mail.smtp.auth", "true");
 
-        // Get system properties
-        Properties properties = new Properties();
+            // Setup mail server
+            properties.put("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.smtp.port", "587");
 
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.auth", "true");
+            // Get the default Session object.
+            Session session = Session.getInstance(properties,
+                    new Authenticator() {
+                        @Override
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication("SueNDeeShop", "codecool123");
+                        }
+                    });
 
-        // Setup mail server
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
+            try {
+                // Create a default MimeMessage object.
+                MimeMessage message = new MimeMessage(session);
 
-        // Get the default Session object.
-        Session session = Session.getInstance(properties,
-                new Authenticator() {
-                    @Override
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("SueNDeeShop", "codecool123");
-                    }
-                });
+                // Set From: header field of the header.
+                message.setFrom(new InternetAddress(from));
 
-        try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
+                // Set To: header field of the header.
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+                // Set Subject: header field
+                message.setSubject("Thank you for registrating!");
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                // Now set the actual message
+                message.setText("Dear " + req.getParameter("name") + "," + "\n \nThank you for choosing to join our fabulous webshop.\n \nWe hope you will enjoy our products. Have a nice day!\nBest Regards,\nSue");
 
-            // Set Subject: header field
-            message.setSubject("Thank you for registrating!");
+                // Send message
+                Transport.send(message);
+                System.out.println("Sent message successfully....");
+            } catch (MessagingException mex) {
+                mex.printStackTrace();
+            }
 
-            // Now set the actual message
-            message.setText("Dear " + req.getParameter("name") + "," + "\n \nThank you for choosing to join our fabulous webshop.\n \nWe hope you will enjoy our products. Have a nice day!\nBest Regards,\nSue");
+            HttpSession httpSession = req.getSession(true);
+            ShoppingCartDao shoppingCart = new ShoppingCartDaoJDBC(addUser.getMostRecentUserId());
+            httpSession.setAttribute("cart", shoppingCart);
 
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+            resp.sendRedirect("/");
         }
-
-        HttpSession httpSession = req.getSession(true);
-        ShoppingCartDao shoppingCart = new ShoppingCartDaoJDBC(addUser.getMostRecentUserId());
-        httpSession.setAttribute("cart", shoppingCart);
-
-        resp.sendRedirect("/");
+        resp.sendRedirect("/registration");
     }
 }
