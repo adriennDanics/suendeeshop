@@ -36,7 +36,7 @@ public class Login extends HttpServlet {
         boolean rightPassword = false;
         rightPassword = loginUser.passwordMatch(req.getParameter("password"), loginUser.getPassword(), loginUser.getSalt());
         if(rightPassword){
-            session.setAttribute("user", loginUser.getId());
+            session.setAttribute("user", loginUser);
             session.setAttribute("cart", new ShoppingCartDaoJDBC(loginUser.getId()));
             resp.sendRedirect("/");
         } else {

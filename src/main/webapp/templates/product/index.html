@@ -30,7 +30,7 @@
 </head>
 
 <body>
-<img src="/static/img/returntoSleep.png" height="200" width="200" align="left" style="opacity: 0.85;">
+<a href="/"><img src="/static/img/returntoSleep.png" height="200" width="200" align="left" style="opacity: 0.85;"></a>
 
 <div class="jumbotron text-center">
 
@@ -43,9 +43,13 @@
             <span class="badge cart-image" th:text="${cart}">Num</span>
             <img src="/static/img/cart.png" height="60" width="60" align="right">
         </a>
-        <a href="/registration" th:text="${user}">Register</a>
-        <a href="/login">Login</a>
-        <a href="/logout">Logout</a>
+        <div th:switch="${user}">
+            <div th:case="0">
+                <div class="btn"> <a class="btn" href="/registration">Register Here</a></div>
+                <div class="btn"> <a class="btn" href="/login">Login</a></div>
+            </div>
+            <div class="btn"> <a class="btn" th:case="*" href="/logout">Logout</a></div>
+        </div>
     </div>
 </div>
 
