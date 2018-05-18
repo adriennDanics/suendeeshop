@@ -44,11 +44,11 @@
             <img src="/static/img/cart.png" height="60" width="60" align="right">
         </a>
         <div th:switch="${user}">
-            <div th:case="0">
-                <div class="btn"> <a class="btn" href="/registration">Register Here</a></div>
-                <div class="btn"> <a class="btn" href="/login">Login</a></div>
+            <div th:case="0" class="logoutbuttons">
+                <div class="btn"> <a class="loginbutton" href="/registration">Register Here</a></div>
+                <div class="btn"> <a class="loginbutton" href="/login">Login</a></div>
             </div>
-            <div class="btn"> <a class="btn" th:case="*" href="/logout">Logout</a></div>
+            <div class="logoutbuttons"> <a class="loginbutton" th:case="*" href="/logout">Logout</a></div>
         </div>
     </div>
 </div>

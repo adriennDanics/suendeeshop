@@ -41,11 +41,11 @@
         </a>
 
         <div th:switch="${user}">
-            <div th:case="0">
-                <div class="btn btn-secondary"> <a class="btn btn-link" href="/registration">Register Here</a></div>
-                <div class="btn btn-primary"> <a class="btn btn-link" href="/login">Login</a></div>
+            <div th:case="0" class="logoutbuttons">
+                <div class="btn"> <a class="loginbutton" href="/registration">Register Here</a></div>
+                <div class="btn"> <a class="loginbutton" href="/login">Login</a></div>
             </div>
-            <div class="btn"> <a class="btn btn-link" th:case="*" href="/logout">Logout</a></div>
+            <div class="btn"> <a class="loginbutton" th:case="*" href="/logout">Logout</a></div>
         </div>
     </div>
 </div>
