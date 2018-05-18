@@ -20,12 +20,12 @@ body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center,
 
 h5 {
     color: red;
-    padding: 30px;
+    padding-left: 30px;
 }
 
 .well {
     margin-top: 20px;
-     margin-bottom: 0px !important;
+    margin-bottom: 0px !important;
  }
 
 .panel-group{
