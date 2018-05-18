@@ -44,71 +44,66 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try{
-            UserDaoJDBC checkUser = new UserDaoJDBC();
-            checkUser.find(req.getParameter("name"));
-        }catch (NullPointerException ex){
-            User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
-            UserDaoJDBC addUser = UserDaoJDBC.getInstance();
-            addUser.add(newUser);
-            // Recipient's email ID needs to be mentioned.
-            String to = req.getParameter("email");
+        UserDaoJDBC checkUser = new UserDaoJDBC();
+        User newUser = new User(req.getParameter("name"), req.getParameter("password"), req.getParameter("email"));
+        UserDaoJDBC addUser = UserDaoJDBC.getInstance();
+        addUser.add(newUser);
+        // Recipient's email ID needs to be mentioned.
+        String to = req.getParameter("email");
 
-            // Sender's email ID needs to be mentioned
-            String from = "SueNDeeShop" +
-                    "@gmail.com";
+        // Sender's email ID needs to be mentioned
+        String from = "SueNDeeShop" +
+                "@gmail.com";
 
-            // Assuming you are sending email from localhost
-            String host = "0.0.0.0";
+        // Assuming you are sending email from localhost
+        String host = "0.0.0.0";
 
-            // Get system properties
-            Properties properties = new Properties();
+        // Get system properties
+        Properties properties = new Properties();
 
-            properties.put("mail.smtp.starttls.enable", "true");
-            properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.auth", "true");
 
-            // Setup mail server
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.port", "587");
+        // Setup mail server
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
 
-            // Get the default Session object.
-            Session session = Session.getInstance(properties,
-                    new Authenticator() {
-                        @Override
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication("SueNDeeShop", "codecool123");
-                        }
-                    });
+        // Get the default Session object.
+        Session session = Session.getInstance(properties,
+                new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("SueNDeeShop", "codecool123");
+                    }
+                });
 
-            try {
-                // Create a default MimeMessage object.
-                MimeMessage message = new MimeMessage(session);
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
 
-                // Set From: header field of the header.
-                message.setFrom(new InternetAddress(from));
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
 
-                // Set To: header field of the header.
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-                // Set Subject: header field
-                message.setSubject("Thank you for registrating!");
+            // Set Subject: header field
+            message.setSubject("Thank you for registrating!");
 
-                // Now set the actual message
-                message.setText("Dear " + req.getParameter("name") + "," + "\n \nThank you for choosing to join our fabulous webshop.\n \nWe hope you will enjoy our products. Have a nice day!\nBest Regards,\nSue");
+            // Now set the actual message
+            message.setText("Dear " + req.getParameter("name") + "," + "\n \nThank you for choosing to join our fabulous webshop.\n \nWe hope you will enjoy our products. Have a nice day!\nBest Regards,\nSue");
 
-                // Send message
-                Transport.send(message);
-                System.out.println("Sent message successfully....");
-            } catch (MessagingException mex) {
-                mex.printStackTrace();
-            }
-
-            HttpSession httpSession = req.getSession(true);
-            ShoppingCartDao shoppingCart = new ShoppingCartDaoJDBC(addUser.getMostRecentUserId());
-            httpSession.setAttribute("cart", shoppingCart);
-
-            resp.sendRedirect("/");
+            // Send message
+            Transport.send(message);
+            System.out.println("Sent message successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
         }
-        resp.sendRedirect("/registration");
+
+        HttpSession httpSession = req.getSession(true);
+        ShoppingCartDao shoppingCart = new ShoppingCartDaoJDBC(addUser.getMostRecentUserId());
+        httpSession.setAttribute("cart", shoppingCart);
+
+        resp.sendRedirect("/");
     }
 }
