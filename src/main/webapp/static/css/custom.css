@@ -18,6 +18,11 @@ body, .panel.panel-default, .panel-heading.well.well-sm, .jumbotron.text-center,
     opacity: 0.95;
 }
 
+h5 {
+    color: red;
+    padding: 30px;
+}
+
 .well {
     margin-top: 20px;
      margin-bottom: 0px !important;
